@@ -1,0 +1,193 @@
+﻿@model PawCare.Models.Mascota
+
+@{
+    ViewData["Title"] = "PawCare - Registro de Mascotas";
+}
+
+<div class="container mt-4">
+
+    <div class="text-center mb-4">
+        <h1 class="display-5">🐾 PawCare</h1>
+        <p class="lead">Registro de mascotas atendidas</p>
+    </div>
+
+    <div class="row">
+
+        <!-- FORMULARIO -->
+        <div class="col-lg-5 mb-4">
+
+            <div class="card shadow">
+                <div class="card-header">
+                    <h4 class="mb-0">Registrar nueva mascota</h4>
+                </div>
+
+                <div class="card-body">
+
+                    <form asp-action="Crear" method="post">
+
+                        <div class="mb-3">
+                            <label asp-for="NombreMascota" class="form-label">
+                                Nombre de la mascota
+                            </label>
+
+                            <input asp-for="NombreMascota"
+                                   class="form-control"
+                                   placeholder="Ej. Firulais" />
+
+                            <span asp-validation-for="NombreMascota"
+                                  class="text-danger"></span>
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label asp-for="NombreDueno" class="form-label">
+                                Nombre del dueño
+                            </label>
+
+                            <input asp-for="NombreDueno"
+                                   class="form-control"
+                                   placeholder="Ej. Juan Pérez" />
+
+                            <span asp-validation-for="NombreDueno"
+                                  class="text-danger"></span>
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label asp-for="Tipo" class="form-label">
+                                Tipo de mascota
+                            </label>
+
+                            <select asp-for="Tipo" class="form-select">
+                                <option value="">Seleccione un tipo</option>
+                                <option value="Perro">Perro</option>
+                                <option value="Gato">Gato</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+
+                            <span asp-validation-for="Tipo"
+                                  class="text-danger"></span>
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label asp-for="Edad" class="form-label">
+                                Edad
+                            </label>
+
+                            <input asp-for="Edad"
+                                   type="number"
+                                   class="form-control"
+                                   min="0"
+                                   max="30"
+                                   placeholder="0 - 30" />
+
+                            <span asp-validation-for="Edad"
+                                  class="text-danger"></span>
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label asp-for="Telefono" class="form-label">
+                                Teléfono
+                            </label>
+
+                            <input asp-for="Telefono"
+                                   class="form-control"
+                                   placeholder="Ej. 987654321" />
+
+                            <span asp-validation-for="Telefono"
+                                  class="text-danger"></span>
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label asp-for="Observaciones" class="form-label">
+                                Observaciones
+                            </label>
+
+                            <textarea asp-for="Observaciones"
+                                      class="form-control"
+                                      rows="3"
+                                      placeholder="Observaciones de la mascota"></textarea>
+                        </div>
+
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">
+                                Registrar mascota
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- TABLA -->
+        <div class="col-lg-7">
+
+            <div class="card shadow">
+
+                <div class="card-header">
+                    <h4 class="mb-0">Mascotas registradas</h4>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="table-responsive">
+
+                        <table class="table table-striped table-bordered">
+
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Mascota</th>
+                                    <th>Dueño</th>
+                                    <th>Tipo</th>
+                                    <th>Edad</th>
+                                    <th>Teléfono</th>
+                                    <th>Observaciones</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @if (ViewBag.Mascotas != null)
+                                {
+                                    foreach (var mascota in ViewBag.Mascotas)
+                                    {
+                                        <tr>
+                                            <td>@mascota.Id</td>
+                                            <td>@mascota.NombreMascota</td>
+                                            <td>@mascota.NombreDueno</td>
+                                            <td>@mascota.Tipo</td>
+                                            <td>@mascota.Edad</td>
+                                            <td>@mascota.Telefono</td>
+                                            <td>@mascota.Observaciones</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
